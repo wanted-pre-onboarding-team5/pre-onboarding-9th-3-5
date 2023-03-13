@@ -28,3 +28,41 @@ export const getChartData = (labels, data1, data2) => {
     ],
   };
 };
+
+export const getChartOptions = (responseData) => {
+  return {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Chart',
+      },
+      tooltip: {
+        callbacks: {
+          label: function ({ label }) {
+            const { id, value_area, value_bar } = responseData[label];
+            const text = `[${id}] 🟣Value_Area: ${value_area} 🟡Value_Bar: ${value_bar}`;
+            return text;
+          },
+        },
+      },
+    },
+    scales: {
+      y1: {
+        position: 'left',
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+      y2: {
+        position: 'right',
+        ticks: {
+          beginAtZero: false,
+        },
+      },
+    },
+  };
+};

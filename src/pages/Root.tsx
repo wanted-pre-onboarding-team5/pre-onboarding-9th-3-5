@@ -14,8 +14,7 @@ import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { useLoaderData } from 'react-router-dom';
 
-import { CHART_OPTIONS } from '@/constants';
-import { convert, getChartData, getKeysFromObj } from '@/utils';
+import { convert, getChartData, getKeysFromObj, getChartOptions } from '@/utils';
 
 import { ResponseData } from '@/types/ResponseDataType';
 
@@ -34,6 +33,7 @@ ChartJS.register(
 export const Root = () => {
   const { response } = useLoaderData() as ResponseData;
   const [initialData, setInitialData] = useState(null);
+  const [options, setOptions] = useState({});
 
   useEffect(() => {
     const labels = getKeysFromObj(response);
@@ -41,9 +41,9 @@ export const Root = () => {
     const valueBar = convert(response, labels, 'value_bar');
     const dataObj = getChartData(labels, valueArea, valueBar);
     setInitialData(dataObj);
+    const chartOptions = getChartOptions(response);
+    setOptions(chartOptions);
   }, [response]);
 
-  return (
-    <div>{initialData && <Chart type='bar' options={CHART_OPTIONS} data={initialData} />}</div>
-  );
+  return <div>{initialData && <Chart type='bar' options={options} data={initialData} />}</div>;
 };
