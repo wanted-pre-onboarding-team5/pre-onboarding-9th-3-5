@@ -1,2 +1,2 @@
-export * from './path';
+export * from './fetch';
 export * from './chart';
