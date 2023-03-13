@@ -14,7 +14,14 @@ export const getChartData = (labels, data1, data2) => {
         type: 'line' as const,
         label: 'Value_Area',
         data: data1,
-        borderColor: 'rgb(227, 179, 242)',
+        borderColor: (context) => {
+          const { active } = context;
+          return active ? 'purple' : 'rgb(227, 179, 242, 0.8)';
+        },
+        backgroundColor: (context) => {
+          const { active } = context;
+          return active ? 'purple' : 'rgb(227, 179, 242, 0.8)';
+        },
         borderWidth: 2,
         yAxisID: 'y1',
       },
@@ -22,7 +29,10 @@ export const getChartData = (labels, data1, data2) => {
         type: 'bar' as const,
         label: 'Value_Bar',
         data: data2,
-        backgroundColor: 'rgba(233, 227, 157, 0.516)',
+        backgroundColor: (context) => {
+          const { active } = context;
+          return active ? 'yellow' : 'rgba(233, 227, 157, 0.516)';
+        },
         yAxisID: 'y2',
       },
     ],
