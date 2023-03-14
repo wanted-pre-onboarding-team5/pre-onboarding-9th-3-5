@@ -37,6 +37,16 @@ export function App() {
   const ids: Array<string> = Object.values(chartDatas)?.map((i: ValuesType) => i.id);
   const labels = Object.keys(chartDatas)?.map((i) => i);
 
+  const coloringGuNames = ids.map((id) =>
+    id === '중랑구'
+      ? 'rgba(157, 203, 49, 0.5)'
+      : id === '성북구'
+      ? 'rgba(32, 127, 165, 0.5)'
+      : id === '강남구'
+      ? 'rgba(188, 49, 203, 0.5)'
+      : 'rgba(230, 22, 50, 0.5)',
+  );
+
   const options = {
     interaction: {
       intersact: false,
@@ -95,7 +105,7 @@ export function App() {
         type: 'bar' as const,
         label: 'barValue',
         data: barValues,
-        backgroundColor: 'rgba(35, 99, 178, 0.5)',
+        backgroundColor: coloringGuNames,
         yAxisId: 'bar',
       },
       {
@@ -103,7 +113,7 @@ export function App() {
         fill: true,
         label: 'areaValue',
         data: areaValues,
-        backgroundColor: 'rgba(194, 48, 194, 0.5)',
+        backgroundColor: 'gray',
         yAxisID: 'area',
         tension: 0.3,
         pointBorderColor: 'white',
