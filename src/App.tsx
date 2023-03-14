@@ -1,5 +1,11 @@
-const App = () => {
-  return <div>App</div>;
-};
+import { BrowserRouter } from 'react-router-dom';
 
-export default App;
+import { MixedChart } from './components/MixedChart';
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <MixedChart />
+    </BrowserRouter>
+  );
+}
