@@ -8,7 +8,7 @@ import { MockData } from '@/types/mock-data';
 
 const Main = () => {
   const loaderData = useLoaderData() as MockData;
-  const { labelArray, areaDataArray, barDataArray } = getChartData(loaderData);
+  const { labelArray, idArray, areaDataArray, barDataArray } = getChartData(loaderData);
 
   return (
     <Container>
@@ -59,6 +59,16 @@ const Main = () => {
               position: 'right',
               min: 0,
               max: 100,
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title(tooltipItems) {
+                  const tooltipItem = tooltipItems[0];
+                  return `${tooltipItem.label} (id: ${idArray[tooltipItem.dataIndex]})`;
+                },
+              },
             },
           },
         }}
