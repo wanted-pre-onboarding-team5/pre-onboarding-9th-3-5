@@ -1,7 +1,10 @@
-import React from 'react';
+import 'chart.js/auto';
 
-const Root = () => {
-  return <div>Root</div>;
+import { useChartData } from '@/hooks';
+
+import MultiChart from '@/components/MultiChart';
+
+export const Root = () => {
+  const data = useChartData();
+  return data && <MultiChart data={data} />;
 };
-
-export default Root;
