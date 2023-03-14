@@ -80,6 +80,9 @@ export function App() {
   };
 
   const options = {
+    interaction: {
+      mode: 'index',
+    },
     plugins: {
       tooltip: {
         callbacks: {
@@ -95,28 +98,8 @@ export function App() {
         position: 'top',
       },
     },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-          drawTicks: true,
-          tickLength: 4,
-          color: '#E2E2E230',
-        },
-        axis: 'x',
-        position: 'bottom',
-      },
-    },
     y: {
       type: 'linear',
-      grid: {
-        display: true,
-        drawTicks: true,
-        color: '#E2E2E230',
-        tickLength: 1000,
-      },
-      axis: 'y',
-      display: true,
       position: 'left',
       title: {
         display: true,
