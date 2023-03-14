@@ -13,7 +13,6 @@ export const useValues = () => {
 
     fetchData();
   }, []);
-
-  // return console.log(values);
+  
   return values;
 };
