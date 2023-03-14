@@ -1,5 +1,8 @@
 export const getOptions = (ids) => {
   return {
+    interaction: {
+      mode: 'index',
+    },
     scales: {
       x: {
         grid: {
