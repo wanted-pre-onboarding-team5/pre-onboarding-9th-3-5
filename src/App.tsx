@@ -1,3 +1,4 @@
+import { Container } from '@mui/system';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,10 +26,22 @@ ChartJS.register(
 );
 
 export function App() {
-  const [item, setItem] = useState([]);
+  const [chartDatas, setChartDatas] = useState([]);
+  interface ValuesType {
+    id: string;
+    value_area: number;
+    value_bar: number;
+  }
+  const barValues: Array<number> = Object.values(chartDatas)?.map((i: ValuesType) => i.value_bar);
+  const areaValues: Array<number> = Object.values(chartDatas)?.map((i: ValuesType) => i.value_area);
+  const ids: Array<string> = Object.values(chartDatas)?.map((i: ValuesType) => i.id);
+  const labels = Object.keys(chartDatas)?.map((i) => i);
 
   const options = {
-    responsive: true,
+    interaction: {
+      intersact: false,
+      mode: 'index',
+    },
     plugins: {
       legend: {
         position: 'top' as const,
@@ -37,26 +50,24 @@ export function App() {
         display: true,
         text: 'Chart.js Bar Chart',
       },
+      tooltip: {
+        callbacks: {
+          title: function (data) {
+            return ids[data[0].dataIndex];
+          },
+        },
+      },
     },
     scales: {
       bar: {
         min: 10000,
         max: 20000,
-        display: true,
         position: 'left' as const,
-        grid: {
-          drawOnChartArea: true,
-          color: 'red',
-        },
       },
       area: {
         min: 0,
-        max: 100,
-        display: true,
+        max: 300,
         position: 'right' as const,
-        grid: {
-          drawOnChartArea: true,
-        },
       },
     },
   };
@@ -67,7 +78,7 @@ export function App() {
         method: 'GET',
       })
         .then((res) => res.json())
-        .then((data) => setItem(data.response));
+        .then((data) => setChartDatas(data.response));
     } catch (err) {
       console.error(err);
     }
@@ -77,16 +88,6 @@ export function App() {
     FlexsysMockAPI();
   }, []);
 
-  interface ValuesType {
-    id: string;
-    value_area: number;
-    value_bar: number;
-  }
-
-  const barValues = Object.values(item)?.map((i: ValuesType) => i.value_bar);
-  const areaValues = Object.values(item)?.map((i: ValuesType) => i.value_area);
-  const labels = Object.keys(item)?.map((i) => i);
-
   const data = {
     labels,
     datasets: [
@@ -94,7 +95,7 @@ export function App() {
         type: 'bar' as const,
         label: 'barValue',
         data: barValues,
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        backgroundColor: 'rgba(35, 99, 178, 0.5)',
         yAxisId: 'bar',
       },
       {
@@ -102,11 +103,18 @@ export function App() {
         fill: true,
         label: 'areaValue',
         data: areaValues,
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgba(194, 48, 194, 0.5)',
         yAxisID: 'area',
+        tension: 0.3,
+        pointBorderColor: 'white',
+        pointBackgroundColor: 'rgba(101, 6, 6, 0.5)',
       },
     ],
   };
 
-  return <Chart type='bar' options={options} data={data} />;
+  return (
+    <Container maxWidth='xl'>
+      <Chart type='bar' options={options} data={data} />
+    </Container>
+  );
 }
