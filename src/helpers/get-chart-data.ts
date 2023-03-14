@@ -1,3 +1,5 @@
+import getChartColor from './get-chart-color';
+
 import type { MockData } from '@/types/mock-data';
 
 type ChartData = {
@@ -5,6 +7,7 @@ type ChartData = {
   idArray: string[];
   areaDataArray: string[];
   barDataArray: string[];
+  barBgArray: string[];
 };
 
 const getChartData = (mockData: MockData) => {
@@ -13,6 +16,7 @@ const getChartData = (mockData: MockData) => {
     idArray: [],
     areaDataArray: [],
     barDataArray: [],
+    barBgArray: [],
   };
 
   for (const [key, value] of Object.entries(mockData.response)) {
@@ -23,6 +27,7 @@ const getChartData = (mockData: MockData) => {
     chartData.barDataArray.push(String(value_bar));
   }
 
+  chartData.barBgArray = [...getChartColor(chartData.idArray)];
   return chartData;
 };
 

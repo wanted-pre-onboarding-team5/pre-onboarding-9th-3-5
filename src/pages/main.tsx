@@ -3,12 +3,13 @@ import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { useLoaderData } from 'react-router-dom';
 
+import type { MockData } from '@/types/mock-data';
+
 import getChartData from '@/helpers/get-chart-data';
-import { MockData } from '@/types/mock-data';
 
 const Main = () => {
   const loaderData = useLoaderData() as MockData;
-  const { labelArray, idArray, areaDataArray, barDataArray } = getChartData(loaderData);
+  const { labelArray, idArray, areaDataArray, barDataArray, barBgArray } = getChartData(loaderData);
 
   return (
     <Container>
@@ -18,6 +19,7 @@ const Main = () => {
           labels: labelArray,
           datasets: [
             {
+              backgroundColor: barBgArray,
               type: 'bar' as const,
               label: 'value_bar',
               yAxisID: 'bar',
