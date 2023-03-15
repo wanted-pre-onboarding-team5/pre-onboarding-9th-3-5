@@ -1,4 +1,6 @@
-export const getOptions = (ids) => {
+import { ProcessChartData } from '@/types';
+
+export const getChartOptions = (processChartData: ProcessChartData) => {
   return {
     interaction: {
       mode: 'index',
@@ -28,7 +30,7 @@ export const getOptions = (ids) => {
         callbacks: {
           title: (tooltipItems) => {
             const tooltipItem = tooltipItems[0];
-            return `${tooltipItem.label}\n${ids[tooltipItem.dataIndex]}`;
+            return `${tooltipItem.label}\n${processChartData.ids[tooltipItem.dataIndex]}`;
           },
         },
       },

@@ -1,21 +1,21 @@
-import { ChartData } from '@/types';
+import { ProcessChartData } from '@/types';
 
-export const processData = (chartData: ChartData) => {
+export const getChartData = (processChartData: ProcessChartData) => {
   const data = {
-    labels: chartData.labels,
+    labels: processChartData.labels,
     datasets: [
       {
         type: 'bar' as const,
         label: 'value_bar',
         yAxisID: 'bar',
-        data: chartData.barData,
+        data: processChartData.barData,
         borderWidth: 1,
       },
       {
         type: 'line' as const,
         label: 'value_area',
         yAxisID: 'line',
-        data: chartData.areaData,
+        data: processChartData.areaData,
         borderWidth: 1,
         fill: 'origin',
         pointStyle: false,
