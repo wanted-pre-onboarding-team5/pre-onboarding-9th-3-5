@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { Container } from '@mui/system';
-import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { Chart } from 'react-chartjs-2';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 import type { MockData } from '@/types/mock-data';
@@ -39,13 +39,16 @@ const Main = () => {
               borderWidth: 1,
             },
             {
+              backgroundColor: 'rgba(50, 183, 250, 0.15)',
               type: 'line' as const,
               label: 'value_area',
               yAxisID: 'line',
               data: areaDataArray,
+              borderJoinStyle: 'round',
               borderWidth: 1,
               fill: 'origin',
               pointStyle: false,
+              tension: 0.2,
             },
           ],
         }}
@@ -79,6 +82,9 @@ const Main = () => {
             navigate(`?selectedID=${idArray[elements[0].index]}`);
           },
           plugins: {
+            legend: {
+              display: false,
+            },
             tooltip: {
               callbacks: {
                 title(tooltipItems) {
