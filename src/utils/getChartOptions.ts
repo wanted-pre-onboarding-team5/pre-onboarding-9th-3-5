@@ -1,6 +1,8 @@
+import { ChartOptions } from 'chart.js';
+
 import { ProcessChartData } from '@/types';
 
-export const getChartOptions = (processChartData: ProcessChartData) => {
+export const getChartOptions = (processChartData: ProcessChartData): ChartOptions => {
   return {
     interaction: {
       mode: 'index',

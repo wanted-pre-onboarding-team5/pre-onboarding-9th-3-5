@@ -1,7 +1,9 @@
+import { ChartData } from 'chart.js';
+
 import { ProcessChartData } from '@/types';
 
-export const getChartData = (processChartData: ProcessChartData) => {
-  const data = {
+export const getChartData = (processChartData: ProcessChartData): ChartData => {
+  return {
     labels: processChartData.labels,
     datasets: [
       {
@@ -22,6 +24,4 @@ export const getChartData = (processChartData: ProcessChartData) => {
       },
     ],
   };
-
-  return data;
 };

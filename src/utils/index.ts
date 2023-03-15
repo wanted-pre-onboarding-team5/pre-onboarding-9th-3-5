@@ -1,2 +1,2 @@
 export * from './fetch';
-export * from './chartHelpers';
+export * from './createChartData';
