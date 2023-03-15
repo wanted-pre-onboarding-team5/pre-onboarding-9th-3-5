@@ -2,9 +2,9 @@ import 'chart.js/auto';
 
 import { useChartData } from '@/hooks';
 
-import MultiChart from '@/components/MultiChart';
+import TimeSeriesChart from '@/components/TimeSeriesChart';
 
 export const Root = () => {
-  const data = useChartData();
-  return data && <MultiChart data={data} />;
+  const [data, options] = useChartData();
+  return data && <TimeSeriesChart data={data} options={options} />;
 };
