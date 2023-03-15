@@ -1,15 +1,20 @@
 import { Container } from '@mui/system';
 import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 import type { MockData } from '@/types/mock-data';
 
+import getChartColor from '@/helpers/get-chart-color';
 import getChartData from '@/helpers/get-chart-data';
+import getQueryData from '@/helpers/get-query-data';
 
 const Main = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryData = getQueryData(location.search);
   const loaderData = useLoaderData() as MockData;
-  const { labelArray, idArray, areaDataArray, barDataArray, barBgArray } = getChartData(loaderData);
+  const { labelArray, idArray, areaDataArray, barDataArray } = getChartData(loaderData);
 
   return (
     <Container>
@@ -19,7 +24,7 @@ const Main = () => {
           labels: labelArray,
           datasets: [
             {
-              backgroundColor: barBgArray,
+              backgroundColor: getChartColor(idArray, queryData?.selectedID),
               type: 'bar' as const,
               label: 'value_bar',
               yAxisID: 'bar',
@@ -62,6 +67,11 @@ const Main = () => {
               min: 0,
               max: 100,
             },
+          },
+          onClick(event, elements, chart) {
+            event;
+            chart;
+            navigate(`?selectedID=${idArray[elements[0].index]}`);
           },
           plugins: {
             tooltip: {
