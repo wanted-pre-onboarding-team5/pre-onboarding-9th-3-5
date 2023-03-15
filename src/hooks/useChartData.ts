@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { API_PATH } from '@/constants';
-import { httpClient, processChartData } from '@/utils';
+import { httpClient, chartDataHelpers } from '@/utils';
 
 export const useChartData = () => {
   const [chartData, setChartData] = useState();
@@ -9,7 +9,7 @@ export const useChartData = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { response } = await httpClient(API_PATH.data);
-      setChartData(processChartData(response));
+      setChartData(chartDataHelpers(response));
     };
 
     fetchData();
