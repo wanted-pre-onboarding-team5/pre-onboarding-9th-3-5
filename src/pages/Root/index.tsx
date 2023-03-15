@@ -1,3 +1,5 @@
+import { Button, ButtonGroup } from '@mui/material';
+import { Container } from '@mui/system';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { coloringGuNames } from '@/utils/coloringGuNames';
+import { coloringGuNames, filteringGuNames } from '@/utils/coloringGuNames';
 import { FlexsysMockAPI } from '@/utils/fetch';
 
 ChartJS.register(
@@ -30,7 +32,7 @@ ChartJS.register(
 
 export function Root() {
   const [chartDatas, setChartDatas] = useState([]);
-
+  const [filteringGu, setFilteringGu] = useState([]);
   let didInit = false;
 
   useEffect(() => {
@@ -56,6 +58,39 @@ export function Root() {
   const ids: Array<string> = Object.values(chartDatas)?.map((i: ValuesType) => i.id);
   const labels = Object.keys(chartDatas)?.map((i) => i);
   const coloringGu = coloringGuNames(ids);
+
+  // console.log('barValues', barValues);
+  // console.log('chartDatas', chartDatas);
+  // console.log('coloringGu', coloringGu);
+  /* 
+  1. 버튼을 클릭한다. (강남구)
+  2. 강남구의 데이터만 필터한다.
+  3. 강남구만 하이라이트가 되게 한다.
+  */
+
+  const onClickHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { name } = e.target;
+    setFilteringGu(filteringGuNames(ids, name));
+  };
+
+  const buttons = [
+    <Button key='one' onClick={onClickHandler} name='전체 보기'>
+      전체 보기
+    </Button>,
+    <Button key='two' onClick={onClickHandler} name='성북구'>
+      성북구
+    </Button>,
+    <Button key='three' onClick={onClickHandler} name='강남구'>
+      강남구
+    </Button>,
+    <Button key='four' onClick={onClickHandler} name='노원구'>
+      노원구
+    </Button>,
+    <Button key='five' onClick={onClickHandler} name='중랑구'>
+      중랑구
+    </Button>,
+  ];
 
   const options = {
     interaction: {
@@ -104,7 +139,7 @@ export function Root() {
         type: 'bar' as const,
         label: 'barValue',
         data: barValues,
-        backgroundColor: coloringGu,
+        backgroundColor: filteringGu.length !== 0 ? filteringGu : coloringGu,
         yAxisId: 'bar',
       },
       {
@@ -112,13 +147,28 @@ export function Root() {
         fill: true,
         label: 'areaValue',
         data: areaValues,
-        backgroundColor: 'gray',
+        backgroundColor: 'rgba(4, 37, 19, 0.5)',
         yAxisID: 'area',
         tension: 0.3,
         pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(101, 6, 6, 0.5)',
+        pointBackgroundColor: 'rgba(173, 30, 30, 0.5)',
       },
     ],
   };
-  return <Chart type='bar' options={options} data={data} />;
+  return (
+    <>
+      <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Chart type='bar' options={options} data={data} />
+        <Container>
+          <ButtonGroup
+            orientation='vertical'
+            aria-label='vertical contained button group'
+            variant='text'
+          >
+            {buttons}
+          </ButtonGroup>
+        </Container>
+      </Container>
+    </>
+  );
 }

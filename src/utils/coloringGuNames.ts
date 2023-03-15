@@ -9,3 +9,10 @@ export const coloringGuNames = (ids: string[]) => {
       : 'rgba(230, 22, 50, 0.5)',
   );
 };
+
+export const filteringGuNames = (ids: string[], name: string) => {
+  const filteringArr: string[] = [];
+  if (name === '전체 보기') return coloringGuNames(ids);
+  ids.forEach((id) => (id === name ? filteringArr.push('red') : filteringArr.push('gray')));
+  return filteringArr;
+};
