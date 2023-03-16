@@ -1,6 +1,6 @@
-import idColorMap from '@/constants/id-color';
+import ID_COLOR_MAP from '@/constants/id-color';
 
-export type IDType = keyof typeof idColorMap;
+export type IDType = keyof typeof ID_COLOR_MAP;
 
 export type MockData = {
   type: string;
