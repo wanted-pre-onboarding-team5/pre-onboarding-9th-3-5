@@ -1,5 +1,7 @@
 import { Y_LABEL } from '@/constants';
 
+import { fillChartColorById } from './chartColor';
+
 import type { ChartData, ChartOptions, ScriptableContext, ChartType } from 'chart.js';
 
 import { ResponseData } from '@/types/ResponseDataType';
@@ -19,14 +21,31 @@ export const extractValueFromResponse = (
   return xLabels.map((xLabel) => responseData[xLabel][yLabel]);
 };
 
-export const getChartData = (labels: string[], data1: number[], data2: number[]): ChartData => {
+export const getChartData = (
+  responseData: ResponseData,
+  labels: string[],
+  areaData: number[],
+  barData: number[],
+): ChartData => {
   return {
     labels,
     datasets: [
       {
+        type: 'bar' as const,
+        label: 'Value_Bar',
+        data: barData,
+        backgroundColor: (context: ChartContext) => {
+          const { active, dataIndex } = context;
+          if (active) return 'rgba(153, 102, 255, 1)';
+          const responseDataKey = labels[dataIndex];
+          return fillChartColorById(responseData, responseDataKey);
+        },
+        yAxisID: 'y2',
+      },
+      {
         type: 'line' as const,
         label: 'Value_Area',
-        data: data1,
+        data: areaData,
         borderColor: (context: ChartContext) => {
           const { active } = context;
           return active ? 'purple' : 'rgb(227, 179, 242, 0.8)';
@@ -35,19 +54,9 @@ export const getChartData = (labels: string[], data1: number[], data2: number[])
           const { active } = context;
           return active ? 'purple' : 'rgb(227, 179, 242, 0.8)';
         },
+        fill: true,
         borderWidth: 2,
         yAxisID: 'y1',
-      },
-      {
-        type: 'bar' as const,
-        label: 'Value_Bar',
-        data: data2,
-        backgroundColor: (context: ChartContext) => {
-          const { active } = context;
-          if (active) return 'yellow';
-          return active ? 'yellow' : 'rgba(233, 227, 157, 0.516)';
-        },
-        yAxisID: 'y2',
       },
     ],
   };
@@ -58,7 +67,7 @@ export const getChartOptions = (responseData: ResponseData): ChartOptions => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        display: false,
       },
       title: {
         display: true,

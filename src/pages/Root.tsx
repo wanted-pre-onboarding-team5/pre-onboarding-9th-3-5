@@ -9,6 +9,7 @@ import {
   Tooltip,
   LineController,
   BarController,
+  Filler,
 } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -30,6 +31,7 @@ ChartJS.register(
   Tooltip,
   LineController,
   BarController,
+  Filler,
 );
 
 export const Root = () => {
@@ -41,7 +43,7 @@ export const Root = () => {
     const labels = getKeysFromObj(response);
     const valueArea = extractValueFromResponse(response, labels, 'value_area');
     const valueBar = extractValueFromResponse(response, labels, 'value_bar');
-    const chartData = getChartData(labels, valueArea, valueBar);
+    const chartData = getChartData(response, labels, valueArea, valueBar);
     setChartDataState(chartData);
     const chartOptions = getChartOptions(response);
     setOptions(chartOptions);
