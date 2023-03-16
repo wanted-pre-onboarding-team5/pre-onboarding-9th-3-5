@@ -17,7 +17,7 @@ export const CHART_SELECTED_COLOR = {
   노원구: 'rgba(75, 192, 192)',
 } as const;
 
-export const FILTER = [
+export const CHART_FILTER = [
   {
     name: 'ALL',
     bg: 'while',
