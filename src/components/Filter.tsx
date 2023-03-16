@@ -2,18 +2,23 @@ import Radio, { radioClasses } from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
 
-import { FILTER } from '@/constants';
-import { handleFilterChange, getCurrentFilter } from '@/utils';
+import { CHART_FILTER } from '@/constants';
 
-export const Filter = () => {
+interface FilterProps {
+  currentFilter: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const Filter = ({ currentFilter, onChange }: FilterProps) => {
   return (
     <>
       <RadioGroup
         aria-labelledby='filter'
-        defaultValue={getCurrentFilter()}
+        value={currentFilter}
+        onChange={onChange}
         sx={{ gap: 2, mb: 2, flexWrap: 'wrap', flexDirection: 'row' }}
       >
-        {FILTER.map(({ name, bg }) => (
+        {CHART_FILTER.map(({ name, bg }) => (
           <Sheet
             key={name}
             sx={{
@@ -42,14 +47,7 @@ export const Filter = () => {
               },
             }}
           >
-            <Radio
-              color='neutral'
-              overlay
-              disableIcon
-              value={name}
-              label={name}
-              onChange={handleFilterChange}
-            />
+            <Radio color='neutral' overlay disableIcon value={name} label={name} />
           </Sheet>
         ))}
       </RadioGroup>
