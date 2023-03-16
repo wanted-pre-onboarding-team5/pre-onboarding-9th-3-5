@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button';
+import { Box, Button } from '@mui/material';
 
 import { filterDistrict } from '@/utils/getChart';
 
@@ -21,17 +21,20 @@ export const Filter = ({ districtValues, filteredDistrict, setFilteredDistrict }
 
   return (
     <>
-      {[...districtSet].map((district: React.Element, i) => (
-        <Button
-          key={i}
-          variant='contained'
-          size='small'
-          name={district}
-          onClick={onButtonFilteringHandler}
-        >
-          {district}
-        </Button>
-      ))}
+      <Box display='flex' justifyContent='center'>
+        {[...districtSet].map((district: React.Element, i) => (
+          <Button
+            m='5'
+            key={i}
+            variant='contained'
+            size='small'
+            name={district}
+            onClick={onButtonFilteringHandler}
+          >
+            {district}
+          </Button>
+        ))}
+      </Box>
     </>
   );
 };
