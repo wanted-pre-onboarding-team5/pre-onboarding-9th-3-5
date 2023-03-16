@@ -19,6 +19,7 @@ import { extractValueFromResponse, getChartData, getKeysFromObj, getChartOptions
 
 import type { ChartData } from 'chart.js';
 
+import { Filter } from '@/components/Filter';
 import { FlexsysApi } from '@/types/ResponseDataType';
 
 ChartJS.register(
@@ -49,7 +50,17 @@ export const Root = () => {
     setOptions(chartOptions);
   }, [response]);
 
+  // const handleChartClick = (e, elements, chart) => {};
+
+  // const additionalOption = {
+  //   onClick: handleChartClick,
+  // };
+
   return (
-    <div>{chartDataState && <Chart type='bar' options={options} data={chartDataState} />}</div>
+    <div>
+      <h1>Flexsys Chart</h1>
+      <Filter />
+      {chartDataState && <Chart type='bar' options={{ ...options }} data={chartDataState} />}
+    </div>
   );
 };

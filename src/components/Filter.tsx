@@ -3,12 +3,14 @@ import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
 
 import { FILTER } from '@/constants';
+import { handleFilterChange, getCurrentFilter } from '@/utils';
+
 export const Filter = () => {
   return (
     <>
       <RadioGroup
         aria-labelledby='filter'
-        defaultValue='ALL'
+        defaultValue={getCurrentFilter()}
         sx={{ gap: 2, mb: 2, flexWrap: 'wrap', flexDirection: 'row' }}
       >
         {FILTER.map(({ name, bg }) => (
@@ -40,7 +42,14 @@ export const Filter = () => {
               },
             }}
           >
-            <Radio color='neutral' overlay disableIcon value={name} label={name} />
+            <Radio
+              color='neutral'
+              overlay
+              disableIcon
+              value={name}
+              label={name}
+              onChange={handleFilterChange}
+            />
           </Sheet>
         ))}
       </RadioGroup>
