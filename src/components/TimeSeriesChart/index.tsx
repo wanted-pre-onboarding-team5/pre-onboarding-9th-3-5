@@ -9,6 +9,8 @@ import {
   Tooltip,
   LineController,
   BarController,
+  ChartData,
+  ChartOptions,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 
@@ -24,8 +26,13 @@ ChartJS.register(
   BarController,
 );
 
-const MultiChart = ({ data }) => {
-  return <Chart type='bar' data={data.data} options={data.options} />;
+interface TimeSeriesChartProps {
+  chartData: ChartData;
+  chartOptions: ChartOptions;
+}
+
+const TimeSeriesChart = ({ chartData, chartOptions }: TimeSeriesChartProps) => {
+  return <Chart type='bar' data={chartData} options={chartOptions} />;
 };
 
-export default MultiChart;
+export default TimeSeriesChart;
