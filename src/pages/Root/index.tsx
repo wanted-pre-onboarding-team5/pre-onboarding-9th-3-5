@@ -2,7 +2,7 @@ import 'chart.js/auto';
 
 import { useChartData } from '@/hooks';
 
-import FilterChart from '@/components/FilterChart';
+import ChartHeader from '@/components/ChartHeader';
 import TimeSeriesChart from '@/components/TimeSeriesChart';
 
 export const Root = () => {
@@ -12,7 +12,7 @@ export const Root = () => {
     chartData &&
     chartOptions && (
       <>
-        <FilterChart handleFilter={handleFilter} />
+        <ChartHeader handleFilter={handleFilter} />
         <TimeSeriesChart chartData={chartData} chartOptions={chartOptions} />
       </>
     )
