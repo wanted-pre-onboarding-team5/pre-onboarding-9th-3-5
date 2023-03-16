@@ -1,5 +1,7 @@
+import PageRouter from './routes';
+
 const App = () => {
-  return <div>App</div>;
+  return <PageRouter />;
 };
 
 export default App;
