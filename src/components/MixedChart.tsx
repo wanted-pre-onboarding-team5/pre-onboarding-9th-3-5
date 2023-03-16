@@ -59,14 +59,10 @@ const MixedChart = ({ loaderData, queryData }: MixedChartProps) => {
             type: 'linear',
             display: true,
             position: 'left',
-            min: 10000,
-            max: 20000,
           },
           line: {
             display: true,
             position: 'right',
-            min: 0,
-            max: 100,
           },
         },
         onClick(event, elements, chart) {
