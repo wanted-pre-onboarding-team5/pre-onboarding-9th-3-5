@@ -1,6 +1,11 @@
 import { ChartData, ChartOptions, ChartTypeRegistry, TooltipItem } from 'chart.js';
 
-const getChartData = (labels: string[], areaData: number[], barData: number[]): ChartData => {
+const getChartData = (
+  labels: string[],
+  areaData: number[],
+  barData: number[],
+  selectedId?: string,
+): ChartData => {
   return {
     labels,
     datasets: [
@@ -12,7 +17,9 @@ const getChartData = (labels: string[], areaData: number[], barData: number[]): 
         fill: true,
         data: areaData,
         yAxisID: 'area',
-        backgroundColor: 'rgba(53, 162, 235, 0.3)',
+        backgroundColor: labels.map((label) =>
+          label === selectedId ? 'rgba(53, 162, 235, 0.5)' : 'rgba(53, 162, 235, 0.3)',
+        ),
       },
       {
         type: 'bar' as const,
