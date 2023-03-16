@@ -1,6 +1,6 @@
-import { Y_LABEL } from '@/constants';
+import { CHART_SELECTED_COLOR, Y_LABEL } from '@/constants';
 
-import { fillChartColorById } from './chartColor';
+import { fillChartColor } from './chartColor';
 
 import type { ChartData, ChartOptions, ScriptableContext, ChartType } from 'chart.js';
 
@@ -36,9 +36,10 @@ export const getChartData = (
         data: barData,
         backgroundColor: (context: ChartContext) => {
           const { active, dataIndex } = context;
-          if (active) return 'rgba(153, 102, 255, 1)';
           const responseDataKey = labels[dataIndex];
-          return fillChartColorById(responseData, responseDataKey);
+          const placeKey = responseData[responseDataKey].id;
+          if (active) return CHART_SELECTED_COLOR[placeKey];
+          return fillChartColor(placeKey);
         },
         yAxisID: 'y2',
       },

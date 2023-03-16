@@ -1,9 +1,19 @@
-import { CHART_BG_COLOR } from '@/constants';
+import { CHART_BG_COLOR, CHART_SELECTED_COLOR } from '@/constants';
 
-import { ResponseData } from '@/types/ResponseDataType';
+import { getCurrentFilter } from './filter';
 
-export const fillChartColorById = (chartData: ResponseData, responseDataKey: string) => {
-  const placeKey = chartData[responseDataKey].id;
+import { Place } from '@/types/ResponseDataType';
 
-  return CHART_BG_COLOR[placeKey] || 'grey';
+export const fillChartColor = (placeKey: Place) => {
+  const filter = getCurrentFilter();
+
+  if (filter === placeKey) {
+    return CHART_SELECTED_COLOR[placeKey];
+  }
+
+  if (filter === 'ALL') {
+    return CHART_BG_COLOR[placeKey];
+  }
+
+  return 'rgb(0, 0, 0, 0.3)';
 };
