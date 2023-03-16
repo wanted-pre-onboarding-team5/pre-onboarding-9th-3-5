@@ -1,15 +1,15 @@
-import { Stack } from '@mui/material';
 import { Container } from '@mui/system';
 import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
-import type { MockData } from '@/types/mock-data';
+import type { MockData, IDType } from '@/types/mock-data';
 
-import FilterByID from '@/components/filter-by-id';
+import FilterBox from '@/components/filter-box';
 import getChartColor from '@/helpers/get-chart-color';
 import getChartData from '@/helpers/get-chart-data';
 import getQueryData from '@/helpers/get-query-data';
+import { QueryDataType } from '@/types/query-data';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -21,17 +21,14 @@ const Main = () => {
 
   return (
     <Container>
-      <Stack direction='row' alignItems='center' justifyContent='space-between'>
-        <h3>FlexSysChart</h3>
-        <FilterByID selectedID={queryData?.selectedID} />
-      </Stack>
+      <FilterBox queryData={queryData as QueryDataType} />
       <Chart
         type='bar'
         data={{
           labels: labelArray,
           datasets: [
             {
-              backgroundColor: getChartColor(idArray, queryData?.selectedID),
+              backgroundColor: getChartColor(idArray, queryData?.selectedID as IDType | undefined),
               type: 'bar' as const,
               label: 'value_bar',
               yAxisID: 'bar',

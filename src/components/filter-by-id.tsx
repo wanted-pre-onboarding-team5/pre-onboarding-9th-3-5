@@ -3,8 +3,11 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ID_COLOR_MAP from '@/constants/id-color';
+import { IDType } from '@/types/mock-data';
+
 type FilterByIDProps = {
-  selectedID: string | undefined;
+  selectedID: IDType | undefined;
 };
 
 function FilterByID({ selectedID }: FilterByIDProps) {
@@ -24,6 +27,7 @@ function FilterByID({ selectedID }: FilterByIDProps) {
   const resetSelectedID = () => {
     navigate(`/`);
   };
+
   return (
     <Box>
       <Button
@@ -45,10 +49,11 @@ function FilterByID({ selectedID }: FilterByIDProps) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>노원구</MenuItem>
-        <MenuItem onClick={handleClose}>중랑구</MenuItem>
-        <MenuItem onClick={handleClose}>성북구</MenuItem>
-        <MenuItem onClick={handleClose}>강남구</MenuItem>
+        {Object.keys(ID_COLOR_MAP).map((id) => (
+          <MenuItem key={id} onClick={handleClose}>
+            {id}
+          </MenuItem>
+        ))}
       </Menu>
       <Button variant='contained' onClick={resetSelectedID} sx={{ marginLeft: '1rem' }}>
         리셋

@@ -1,15 +1,12 @@
-const colorMap: { [key: string]: string } = {
-  중랑구: 'red',
-  노원구: 'yellow',
-  성북구: 'Green',
-  강남구: 'blue',
-};
+import type { IDType } from '@/types/mock-data';
 
-const getChartColor = (idArray: string[], selectedId: string | undefined) => {
+import ID_COLOR_MAP from '@/constants/id-color';
+
+const getChartColor = (idArray: IDType[], selectedID: IDType | undefined) => {
   const colorArray = [];
 
   for (const id of idArray) {
-    colorArray.push(id === selectedId || !selectedId ? colorMap[id] : '#efefef');
+    colorArray.push(id === selectedID || selectedID === undefined ? ID_COLOR_MAP[id] : '#efefef');
   }
 
   return colorArray;
