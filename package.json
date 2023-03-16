@@ -20,7 +20,6 @@
     "react-router-dom": "^6.8.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.54.1",

@@ -11,9 +11,8 @@ import {
   LineController,
   BarController,
 } from 'chart.js';
+import { useState } from 'react';
 import { Chart } from 'react-chartjs-2';
-
-import { useValues } from './hooks/useValues';
 
 ChartJS.register(
   LinearScale,
@@ -27,20 +26,21 @@ ChartJS.register(
   LineController,
   BarController,
 );
+import Filter from './components/Filter';
+import { useValues } from './hooks/useValues';
+import { getChartColor } from './utils/getChart';
 
 export function App() {
   const chartData = useValues();
   const chartObj = chartData?.response;
-  const barArrData = [];
-  const areaArrData = [];
+  const barArrData: Array<number> = [];
+  const areaArrData: Array<number> = [];
 
-  Object.entries(chartObj || {}).map(([key, value]) =>
-    barArrData.push({ x: key, y: value.value_bar, z: value.id }),
-  );
-
-  Object.entries(chartObj || {}).map(([key, value]) =>
-    areaArrData.push({ x: key, y: value.value_area, z: value.id }),
-  );
+  chartObj &&
+    Object.entries(chartObj).map(([key, value]) => {
+      barArrData.push({ x: key, y: value.value_bar, z: value.id });
+      areaArrData.push({ x: key, y: value.value_area, z: value.id });
+    });
 
   const districtValues = Object.values(chartObj || {}).map((value) => value.id);
 
@@ -49,30 +49,25 @@ export function App() {
     districtSet.add(districtValue);
   }
 
-  const colorMap = {
-    강남구: '#ff9999',
-    노원구: '#91c6e9',
-    성북구: '#ffdd86',
-    중랑구: '#8fe6b3',
-  };
-
-  const colors = [...districtSet].map((i) => colorMap[i]);
+  const districtColor = getChartColor(districtValues);
+  const [filteredDistrict, setFilteredDistrict] = useState([]);
 
   const data = {
     datasets: [
       {
         type: 'line' as const,
         label: 'AreaData',
-        borderColor: 'rgb(206, 206, 206)',
-        borderWidth: 2,
+        borderColor: 'rgba(206, 206, 206, 0.855)',
+        borderWidth: 0,
         fill: true,
         data: areaArrData,
-        backgroundColor: 'rgba(185, 185, 185, 0.2)',
+        backgroundColor: 'rgba(185, 185, 185, 0.3)',
+        pointStyle: false,
       },
       {
         type: 'bar' as const,
         label: 'BarData',
-        backgroundColor: colors,
+        backgroundColor: filteredDistrict.length !== 0 ? filteredDistrict : districtColor,
         data: barArrData,
         yAxisID: 'y_sub',
       },
@@ -80,43 +75,30 @@ export function App() {
   };
 
   const options = {
+    pointBackgroundColor: function (chart) {
+      const value = chart.dataset.data[chart.dataIndex];
+
+      return value > 0 ? 'red' : 'blue';
+    },
     plugins: {
       tooltip: {
         callbacks: {
-          title: function (context) {
-            return context[0].dataset.data[context[0].dataIndex].z;
+          title: function (chart) {
+            return chart[0].dataset.data[chart[0].dataIndex].z;
           },
         },
+        legend: {
+          display: false,
+        },
       },
-      legend: { display: false },
       title: {
         display: true,
         text: 'Test chart',
         position: 'top',
       },
     },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-          drawTicks: true,
-          tickLength: 4,
-          color: '#E2E2E230',
-        },
-        axis: 'x',
-        position: 'bottom',
-      },
-    },
     y: {
       type: 'linear',
-      grid: {
-        display: true,
-        drawTicks: true,
-        color: '#E2E2E230',
-        tickLength: 1000,
-      },
-      axis: 'y',
-      display: true,
       position: 'left',
       title: {
         display: true,
@@ -144,7 +126,18 @@ export function App() {
 
   return (
     <>
-      <Chart type='bar' data={data} options={options} />
+      <Filter
+        districtValues={districtValues}
+        filteredDistrict={filteredDistrict}
+        setFilteredDistrict={setFilteredDistrict}
+      />
+      <Chart
+        type='bar'
+        data={data}
+        options={options}
+        filteredDistrict={filteredDistrict}
+        setFilteredDistrict={setFilteredDistrict}
+      />
     </>
   );
 }
