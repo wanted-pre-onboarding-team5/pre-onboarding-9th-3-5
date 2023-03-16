@@ -1,12 +1,12 @@
 import { Container } from '@mui/system';
 import { useLoaderData, useLocation } from 'react-router-dom';
 
-import type { MockData } from '@/types/mock-data';
-import type { QueryDataType } from '@/types/query-data';
+import type { MockData } from '@/types/mockData';
+import type { QueryDataType } from '@/types/queryData';
 
-import FilterBox from '@/components/filter-box';
-import MixedChart from '@/components/mixed-chart';
-import getQueryData from '@/helpers/get-query-data';
+import FilterBox from '@/components/FilterBox';
+import MixedChart from '@/components/MixedChart';
+import getQueryData from '@/helpers/getQueryData';
 
 const Main = () => {
   const location = useLocation();

@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
 
-import FilterByID from './filter-by-id';
+import FilterByID from './FilterByID';
 
-import type { QueryDataType } from '@/types/query-data';
+import type { QueryDataType } from '@/types/queryData';
 
 type FilterBoxProps = {
   queryData: QueryDataType | undefined;

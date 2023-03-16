@@ -1,4 +1,4 @@
-import ID_COLOR_MAP from '@/constants/id-color';
+import ID_COLOR_MAP from '@/constants/chart';
 
 export type IDType = keyof typeof ID_COLOR_MAP;
 

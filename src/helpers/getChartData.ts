@@ -1,4 +1,4 @@
-import type { MockData, IDType } from '@/types/mock-data';
+import type { MockData, IDType } from '@/types/mockData';
 
 type ChartData = {
   labelArray: string[];

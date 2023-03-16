@@ -3,9 +3,9 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import type { IDType } from '@/types/mock-data';
+import type { IDType } from '@/types/mockData';
 
-import ID_COLOR_MAP from '@/constants/id-color';
+import ID_COLOR_MAP from '@/constants/chart';
 
 type FilterByIDProps = {
   selectedID: IDType | undefined;

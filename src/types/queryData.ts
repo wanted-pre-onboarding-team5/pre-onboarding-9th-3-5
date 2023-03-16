@@ -1,4 +1,4 @@
-import type { IDType } from './mock-data';
+import type { IDType } from './mockData';
 
 export type QueryDataType = {
   selectedID: IDType;

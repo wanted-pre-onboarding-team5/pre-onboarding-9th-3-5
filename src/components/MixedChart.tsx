@@ -2,11 +2,11 @@ import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
 
-import type { MockData } from '@/types/mock-data';
-import type { QueryDataType } from '@/types/query-data';
+import type { MockData } from '@/types/mockData';
+import type { QueryDataType } from '@/types/queryData';
 
-import getChartColor from '@/helpers/get-chart-color';
-import getChartData from '@/helpers/get-chart-data';
+import getChartColor from '@/helpers/getChartColor';
+import getChartData from '@/helpers/getChartData';
 
 type MixedChartProps = {
   loaderData: MockData;
