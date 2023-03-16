@@ -1,11 +1,7 @@
-import { BrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
-import { MixedChart } from './components/MixedChart';
+import { router } from '@/routes';
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <MixedChart />
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

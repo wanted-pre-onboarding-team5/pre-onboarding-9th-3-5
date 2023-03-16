@@ -10,6 +10,8 @@ import {
   LineController,
   BarController,
   Filler,
+  TooltipItem,
+  ChartTypeRegistry,
 } from 'chart.js';
 
 import { ChartData } from '@/types';
@@ -43,9 +45,8 @@ export const getOptions = (datas: ChartData[]) => ({
     tooltip: {
       position: 'custom' as const,
       callbacks: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        title: function (context: any) {
-          return `id: ${datas[context[0].dataIndex].id}`;
+        title: function (TooltipItem: TooltipItem<keyof ChartTypeRegistry>[]) {
+          return `${datas[TooltipItem[0].dataIndex].id}`;
         },
       },
     },
@@ -76,7 +77,7 @@ export const getOptions = (datas: ChartData[]) => ({
   },
 });
 
-export const getFilteredData = (labels: string[], datas: ChartData[]) => {
+export const getFilteredData = (labels: string[], datas: ChartData[], condition?: string) => {
   const themes = {
     성북구: 'rgb(255, 139, 139)',
     강남구: 'rgb(177, 254, 139)',
@@ -105,7 +106,11 @@ export const getFilteredData = (labels: string[], datas: ChartData[]) => {
         label: 'bar',
         borderColor: 'white',
         borderWidth: 2,
-        backgroundColor: datas.map((data) => themes[data.id as keyof typeof themes]),
+        backgroundColor: datas.map((data) => {
+          if (!condition) return themes[data.id as keyof typeof themes];
+          if (condition === data.id) return themes[data.id as keyof typeof themes];
+          return 'rgb(167, 167, 167, 0.5)';
+        }),
         data: datas.map((data) => data.value_bar),
         yAxisID: 'bar',
       },
