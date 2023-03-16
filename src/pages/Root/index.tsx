@@ -1,3 +1,5 @@
+import { Button, ButtonGroup } from '@mui/material';
+import { Container } from '@mui/system';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,11 +12,13 @@ import {
   LineElement,
   Filler,
 } from 'chart.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
+import { chartDataOptions, chartOptions } from '@/utils/chartOptions';
 import { coloringGuNames } from '@/utils/coloringGuNames';
 import { FlexsysMockAPI } from '@/utils/fetch';
+import { filteringGuNames } from '@/utils/filteringGuNames';
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +34,8 @@ ChartJS.register(
 
 export function Root() {
   const [chartDatas, setChartDatas] = useState([]);
-
+  const [filteringGu, setFilteringGu] = useState([]);
+  const chartRef = useRef();
   let didInit = false;
 
   useEffect(() => {
@@ -57,68 +62,58 @@ export function Root() {
   const labels = Object.keys(chartDatas)?.map((i) => i);
   const coloringGu = coloringGuNames(ids);
 
-  const options = {
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Bar Chart',
-      },
-      tooltip: {
-        callbacks: {
-          title: function (data) {
-            return `${ids[data[0].dataIndex]}`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          drawOnChartArea: false,
-        },
-      },
-      bar: {
-        min: 10000,
-        max: 20000,
-        position: 'left' as const,
-      },
-      area: {
-        min: 0,
-        max: 300,
-        position: 'right' as const,
-      },
-    },
+  const onChartClickHandler = () => {
+    const guName = chartRef.current.tooltip.title[0];
+    setFilteringGu(filteringGuNames(ids, guName));
   };
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        type: 'bar' as const,
-        label: 'barValue',
-        data: barValues,
-        backgroundColor: coloringGu,
-        yAxisId: 'bar',
-      },
-      {
-        type: 'line' as const,
-        fill: true,
-        label: 'areaValue',
-        data: areaValues,
-        backgroundColor: 'gray',
-        yAxisID: 'area',
-        tension: 0.3,
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(101, 6, 6, 0.5)',
-      },
-    ],
+  const onButtonFilteringHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { name: guName } = e.target;
+    setFilteringGu(filteringGuNames(ids, guName));
   };
-  return <Chart type='bar' options={options} data={data} />;
+
+  const buttons = [
+    <Button key='one' onClick={onButtonFilteringHandler} name='전체 보기'>
+      전체 보기
+    </Button>,
+    <Button key='two' onClick={onButtonFilteringHandler} name='성북구'>
+      성북구
+    </Button>,
+    <Button key='three' onClick={onButtonFilteringHandler} name='강남구'>
+      강남구
+    </Button>,
+    <Button key='four' onClick={onButtonFilteringHandler} name='노원구'>
+      노원구
+    </Button>,
+    <Button key='five' onClick={onButtonFilteringHandler} name='중랑구'>
+      중랑구
+    </Button>,
+  ];
+
+  const options = chartOptions(ids);
+  const data = chartDataOptions(labels, barValues, areaValues, filteringGu, coloringGu);
+
+  return (
+    <>
+      <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Chart
+          type='bar'
+          options={options}
+          data={data}
+          ref={chartRef}
+          onClick={onChartClickHandler}
+        />
+        <Container>
+          <ButtonGroup
+            orientation='vertical'
+            aria-label='vertical contained button group'
+            variant='text'
+          >
+            {buttons}
+          </ButtonGroup>
+        </Container>
+      </Container>
+    </>
+  );
 }
