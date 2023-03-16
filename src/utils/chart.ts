@@ -4,6 +4,7 @@ import { fillChartColor } from './chartColor';
 
 import type { ChartData, ChartOptions, ScriptableContext, ChartType } from 'chart.js';
 
+import { ChartClick } from '@/hooks/useFilterChart';
 import { ResponseData } from '@/types/ResponseDataType';
 
 type YLabel = (typeof Y_LABEL)[keyof typeof Y_LABEL];
@@ -63,8 +64,9 @@ export const getChartData = (
   };
 };
 
-export const getChartOptions = (responseData: ResponseData): ChartOptions => {
+export const getChartOptions = (responseData: ResponseData, onClick: ChartClick): ChartOptions => {
   return {
+    onClick,
     responsive: true,
     plugins: {
       legend: {

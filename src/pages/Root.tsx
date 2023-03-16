@@ -1,3 +1,5 @@
+import { Typography } from '@mui/joy';
+import { Box } from '@mui/material';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -11,15 +13,13 @@ import {
   BarController,
   Filler,
 } from 'chart.js';
-import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { useLoaderData } from 'react-router-dom';
 
 import { extractValueFromResponse, getChartData, getKeysFromObj, getChartOptions } from '@/utils';
 
-import type { ChartData } from 'chart.js';
-
 import { Filter } from '@/components/Filter';
+import { useFilterChart } from '@/hooks/useFilterChart';
 import { FlexsysApi } from '@/types/ResponseDataType';
 
 ChartJS.register(
@@ -37,30 +37,21 @@ ChartJS.register(
 
 export const Root = () => {
   const { response } = useLoaderData() as FlexsysApi;
-  const [chartDataState, setChartDataState] = useState<null | ChartData>(null);
-  const [options, setOptions] = useState({});
+  const labels = getKeysFromObj(response);
+  const valueArea = extractValueFromResponse(response, labels, 'value_area');
+  const valueBar = extractValueFromResponse(response, labels, 'value_bar');
 
-  useEffect(() => {
-    const labels = getKeysFromObj(response);
-    const valueArea = extractValueFromResponse(response, labels, 'value_area');
-    const valueBar = extractValueFromResponse(response, labels, 'value_bar');
-    const chartData = getChartData(response, labels, valueArea, valueBar);
-    setChartDataState(chartData);
-    const chartOptions = getChartOptions(response);
-    setOptions(chartOptions);
-  }, [response]);
-
-  // const handleChartClick = (e, elements, chart) => {};
-
-  // const additionalOption = {
-  //   onClick: handleChartClick,
-  // };
+  const { currentFilter, handleFilterChange, handleChartClick } = useFilterChart(labels, response);
+  const chartData = getChartData(response, labels, valueArea, valueBar);
+  const chartOptions = getChartOptions(response, handleChartClick);
 
   return (
-    <div>
-      <h1>Flexsys Chart</h1>
-      <Filter />
-      {chartDataState && <Chart type='bar' options={{ ...options }} data={chartDataState} />}
-    </div>
+    <>
+      <Typography level='display2'>Flexsys Chart</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Filter currentFilter={currentFilter} onChange={handleFilterChange} />
+      </Box>
+      <Chart type='bar' options={chartOptions} data={chartData} />
+    </>
   );
 };
