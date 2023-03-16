@@ -15,8 +15,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { coloringGuNames, filteringGuNames, buttonFilteringGuNames } from '@/utils/coloringGuNames';
+import { chartDataOptions, chartOptions } from '@/utils/chartOptions';
+import { coloringGuNames } from '@/utils/coloringGuNames';
 import { FlexsysMockAPI } from '@/utils/fetch';
+import { filteringGuNames } from '@/utils/filteringGuNames';
 
 ChartJS.register(
   CategoryScale,
@@ -60,116 +62,48 @@ export function Root() {
   const labels = Object.keys(chartDatas)?.map((i) => i);
   const coloringGu = coloringGuNames(ids);
 
-  // console.log('barValues', barValues);
-  // console.log('chartDatas', chartDatas);
-  // console.log('coloringGu', coloringGu);
-  /* 
-  1. 버튼을 클릭한다. (강남구)
-  2. 강남구의 데이터만 필터한다.
-  3. 강남구만 하이라이트가 되게 한다.
-  */
-
-  /*
-  1. 특정 데이터 구역을 클릭한다.
-  2. 해당하는 구만 하이라이트가 되게 한다.
-  */
-
-  const onClick = () => {
+  const onChartClickHandler = () => {
     const guName = chartRef.current.tooltip.title[0];
     setFilteringGu(filteringGuNames(ids, guName));
   };
 
-  const onClickHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onButtonFilteringHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const { name } = e.target;
-    setFilteringGu(buttonFilteringGuNames(ids, name));
+    const { name: guName } = e.target;
+    setFilteringGu(filteringGuNames(ids, guName));
   };
 
   const buttons = [
-    <Button key='one' onClick={onClickHandler} name='전체 보기'>
+    <Button key='one' onClick={onButtonFilteringHandler} name='전체 보기'>
       전체 보기
     </Button>,
-    <Button key='two' onClick={onClickHandler} name='성북구'>
+    <Button key='two' onClick={onButtonFilteringHandler} name='성북구'>
       성북구
     </Button>,
-    <Button key='three' onClick={onClickHandler} name='강남구'>
+    <Button key='three' onClick={onButtonFilteringHandler} name='강남구'>
       강남구
     </Button>,
-    <Button key='four' onClick={onClickHandler} name='노원구'>
+    <Button key='four' onClick={onButtonFilteringHandler} name='노원구'>
       노원구
     </Button>,
-    <Button key='five' onClick={onClickHandler} name='중랑구'>
+    <Button key='five' onClick={onButtonFilteringHandler} name='중랑구'>
       중랑구
     </Button>,
   ];
 
-  const options = {
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Bar Chart',
-      },
-      tooltip: {
-        callbacks: {
-          title: function (data) {
-            return `${ids[data[0].dataIndex]}`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          drawOnChartArea: false,
-        },
-      },
-      bar: {
-        min: 10000,
-        max: 20000,
-        position: 'left' as const,
-      },
-      area: {
-        min: 0,
-        max: 300,
-        position: 'right' as const,
-      },
-    },
-  };
+  const options = chartOptions(ids);
+  const data = chartDataOptions(labels, barValues, areaValues, filteringGu, coloringGu);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        type: 'bar' as const,
-        label: 'barValue',
-        data: barValues,
-        backgroundColor: filteringGu.length !== 0 ? filteringGu : coloringGu,
-        yAxisId: 'bar',
-      },
-      {
-        type: 'line' as const,
-        fill: true,
-        label: 'areaValue',
-        data: areaValues,
-        backgroundColor: 'rgba(4, 37, 19, 0.5)',
-        yAxisID: 'area',
-        tension: 0.3,
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(173, 30, 30, 0.5)',
-      },
-    ],
-  };
   return (
     <>
       <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Chart type='bar' options={options} data={data} ref={chartRef} onClick={onClick} />
+        <Chart
+          type='bar'
+          options={options}
+          data={data}
+          ref={chartRef}
+          onClick={onChartClickHandler}
+        />
         <Container>
           <ButtonGroup
             orientation='vertical'

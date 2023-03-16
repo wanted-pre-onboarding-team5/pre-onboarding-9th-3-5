@@ -9,20 +9,3 @@ export const coloringGuNames = (ids: string[]) => {
       : 'rgba(230, 22, 50, 0.5)',
   );
 };
-
-export const buttonFilteringGuNames = (ids: string[], name: string) => {
-  const filteringArr: string[] = [];
-  if (name === '전체 보기') return coloringGuNames(ids);
-  ids.forEach((id) =>
-    id === name ? filteringArr.push('red') : filteringArr.push('rgba(32, 127, 165, 0.5)'),
-  );
-  return filteringArr;
-};
-
-export const filteringGuNames = (ids: string[], guName: string) => {
-  const filteringArr: string[] = [];
-  ids.forEach((id) =>
-    id === guName ? filteringArr.push('red') : filteringArr.push('rgba(32, 127, 165, 0.5)'),
-  );
-  return filteringArr;
-};
