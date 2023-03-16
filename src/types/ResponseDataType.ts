@@ -7,3 +7,9 @@ export interface AreaData {
 export interface ResponseData {
   [key: string]: AreaData;
 }
+
+export interface FlexsysApi {
+  response: ResponseData;
+  type: string;
+  version: number;
+}
