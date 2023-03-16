@@ -11,7 +11,7 @@ import {
   LineController,
   BarController,
 } from 'chart.js';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Chart } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -29,8 +29,10 @@ ChartJS.register(
 import Filter from './components/Filter';
 import { useValues } from './hooks/useValues';
 import { getChartColor } from './utils/getChart';
+import { filterDistrict } from './utils/getChart';
 
 export function App() {
+  const chartRef = useRef();
   const chartData = useValues();
   const chartObj = chartData?.response;
   const barArrData: Array<number> = [];
@@ -51,6 +53,11 @@ export function App() {
 
   const districtColor = getChartColor(districtValues);
   const [filteredDistrict, setFilteredDistrict] = useState([]);
+
+  const onChartClickHandler = () => {
+    const district = chartRef.current.tooltip.title[0];
+    setFilteredDistrict(filterDistrict(districtValues, district));
+  };
 
   const data = {
     datasets: [
@@ -137,6 +144,8 @@ export function App() {
         options={options}
         filteredDistrict={filteredDistrict}
         setFilteredDistrict={setFilteredDistrict}
+        ref={chartRef}
+        onClick={onChartClickHandler}
       />
     </>
   );

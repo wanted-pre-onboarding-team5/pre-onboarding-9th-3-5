@@ -13,7 +13,7 @@ export const Filter = ({ districtValues, filteredDistrict, setFilteredDistrict }
     districtSet.add(districtValue);
   }
 
-  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onButtonFilteringHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const { name } = e.target as HTMLInputElement;
     filteredDistrict && setFilteredDistrict(filterDistrict(districtValues, name));
@@ -22,7 +22,13 @@ export const Filter = ({ districtValues, filteredDistrict, setFilteredDistrict }
   return (
     <>
       {[...districtSet].map((district: React.Element, i) => (
-        <Button key={i} variant='contained' size='small' name={district} onClick={onClickHandler}>
+        <Button
+          key={i}
+          variant='contained'
+          size='small'
+          name={district}
+          onClick={onButtonFilteringHandler}
+        >
           {district}
         </Button>
       ))}
