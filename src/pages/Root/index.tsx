@@ -12,10 +12,10 @@ import {
   LineElement,
   Filler,
 } from 'chart.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { coloringGuNames, filteringGuNames } from '@/utils/coloringGuNames';
+import { coloringGuNames, filteringGuNames, buttonFilteringGuNames } from '@/utils/coloringGuNames';
 import { FlexsysMockAPI } from '@/utils/fetch';
 
 ChartJS.register(
@@ -33,6 +33,7 @@ ChartJS.register(
 export function Root() {
   const [chartDatas, setChartDatas] = useState([]);
   const [filteringGu, setFilteringGu] = useState([]);
+  const chartRef = useRef();
   let didInit = false;
 
   useEffect(() => {
@@ -68,10 +69,20 @@ export function Root() {
   3. 강남구만 하이라이트가 되게 한다.
   */
 
+  /*
+  1. 특정 데이터 구역을 클릭한다.
+  2. 해당하는 구만 하이라이트가 되게 한다.
+  */
+
+  const onClick = () => {
+    const guName = chartRef.current.tooltip.title[0];
+    setFilteringGu(filteringGuNames(ids, guName));
+  };
+
   const onClickHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name } = e.target;
-    setFilteringGu(filteringGuNames(ids, name));
+    setFilteringGu(buttonFilteringGuNames(ids, name));
   };
 
   const buttons = [
@@ -158,7 +169,7 @@ export function Root() {
   return (
     <>
       <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Chart type='bar' options={options} data={data} />
+        <Chart type='bar' options={options} data={data} ref={chartRef} onClick={onClick} />
         <Container>
           <ButtonGroup
             orientation='vertical'

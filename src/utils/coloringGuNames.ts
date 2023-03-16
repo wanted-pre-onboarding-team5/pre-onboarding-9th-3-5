@@ -10,9 +10,19 @@ export const coloringGuNames = (ids: string[]) => {
   );
 };
 
-export const filteringGuNames = (ids: string[], name: string) => {
+export const buttonFilteringGuNames = (ids: string[], name: string) => {
   const filteringArr: string[] = [];
   if (name === '전체 보기') return coloringGuNames(ids);
-  ids.forEach((id) => (id === name ? filteringArr.push('red') : filteringArr.push('gray')));
+  ids.forEach((id) =>
+    id === name ? filteringArr.push('red') : filteringArr.push('rgba(32, 127, 165, 0.5)'),
+  );
+  return filteringArr;
+};
+
+export const filteringGuNames = (ids: string[], guName: string) => {
+  const filteringArr: string[] = [];
+  ids.forEach((id) =>
+    id === guName ? filteringArr.push('red') : filteringArr.push('rgba(32, 127, 165, 0.5)'),
+  );
   return filteringArr;
 };
