@@ -14,9 +14,11 @@ import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { useLoaderData } from 'react-router-dom';
 
-import { convert, getChartData, getKeysFromObj, getChartOptions } from '@/utils';
+import { extractValueFromResponse, getChartData, getKeysFromObj, getChartOptions } from '@/utils';
 
-import { ResponseData } from '@/types/ResponseDataType';
+import type { ChartData } from 'chart.js';
+
+import { FlexsysApi } from '@/types/ResponseDataType';
 
 ChartJS.register(
   LinearScale,
@@ -31,19 +33,21 @@ ChartJS.register(
 );
 
 export const Root = () => {
-  const { response } = useLoaderData() as ResponseData;
-  const [initialData, setInitialData] = useState(null);
+  const { response } = useLoaderData() as FlexsysApi;
+  const [chartDataState, setChartDataState] = useState<null | ChartData>(null);
   const [options, setOptions] = useState({});
 
   useEffect(() => {
     const labels = getKeysFromObj(response);
-    const valueArea = convert(response, labels, 'value_area');
-    const valueBar = convert(response, labels, 'value_bar');
-    const dataObj = getChartData(labels, valueArea, valueBar);
-    setInitialData(dataObj);
+    const valueArea = extractValueFromResponse(response, labels, 'value_area');
+    const valueBar = extractValueFromResponse(response, labels, 'value_bar');
+    const chartData = getChartData(labels, valueArea, valueBar);
+    setChartDataState(chartData);
     const chartOptions = getChartOptions(response);
     setOptions(chartOptions);
   }, [response]);
 
-  return <div>{initialData && <Chart type='bar' options={options} data={initialData} />}</div>;
+  return (
+    <div>{chartDataState && <Chart type='bar' options={options} data={chartDataState} />}</div>
+  );
 };
