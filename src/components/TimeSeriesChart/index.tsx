@@ -26,8 +26,13 @@ ChartJS.register(
   BarController,
 );
 
-const TimeSeriesChart = ({ data, options }: { data: ChartData; options: ChartOptions }) => {
-  return <Chart type='bar' data={data} options={options} />;
+interface TimeSeriesChartProps {
+  chartData: ChartData;
+  chartOptions: ChartOptions;
+}
+
+const TimeSeriesChart = ({ chartData, chartOptions }: TimeSeriesChartProps) => {
+  return <Chart type='bar' data={chartData} options={chartOptions} />;
 };
 
 export default TimeSeriesChart;

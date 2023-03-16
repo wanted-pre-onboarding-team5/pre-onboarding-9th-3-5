@@ -3,7 +3,11 @@ import { MockData, ProcessChartData } from '@/types';
 import { getChartData } from './getChartData';
 import { getChartOptions } from './getChartOptions';
 
-export const createChartData = (mockData: MockData) => {
+export const createChartData = (
+  mockData: MockData,
+  selectedRegion: string,
+  handleFilter: (region: string) => void,
+) => {
   const processChartData: ProcessChartData = {
     labels: [],
     ids: [],
@@ -18,8 +22,8 @@ export const createChartData = (mockData: MockData) => {
     processChartData.barData.push(item.value_bar);
   });
 
-  const data = getChartData(processChartData);
-  const options = getChartOptions(processChartData);
+  const data = getChartData(processChartData, selectedRegion);
+  const options = getChartOptions(processChartData, handleFilter);
 
   return { data, options };
 };
