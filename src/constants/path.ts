@@ -1,3 +1,3 @@
-export const PATH_ROUTE = Object.freeze({
+export const PATH_ROUTE = {
   root: '/',
-});
+} as const;
