@@ -1,4 +1,4 @@
-import { Container } from '@mui/system';
+import Box from '@mui/material/Box';
 import { useLoaderData, useLocation } from 'react-router-dom';
 
 import type { QueryData } from '@/types/queryData';
@@ -14,10 +14,10 @@ const Main = () => {
   const queryData = getQueryData(location.search);
 
   return (
-    <Container>
+    <Box sx={{ m: 1 }}>
       <Header />
       <FilterableChart loaderData={loaderData} queryData={queryData as QueryData} />
-    </Container>
+    </Box>
   );
 };
 
