@@ -27,6 +27,7 @@ export const useChartFilter = (currentFilter: string) => {
     }
     const selectedId = idArray[element.index];
     navigate(`?selectedId=${selectedId}`);
+    setSelectedFilter(selectedId);
   };
 
   return {
