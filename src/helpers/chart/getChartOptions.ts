@@ -36,7 +36,7 @@ const getChartOptions = ({
     onClick(_, elements) {
       const element = elements[0];
       if (!element) {
-        navigate(`?selectedId=ALL`);
+        navigate(`/`);
         return;
       }
       const selectedId = idArray[element.index];

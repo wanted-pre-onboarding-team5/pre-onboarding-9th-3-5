@@ -1,7 +1,7 @@
 import type { Id } from '@/types/responseData';
 
 import { CHART_BG_COLOR, UNSELECTED_BG_COLOR, CHART_OPACITY } from '@/constants/chart';
-import { transparentize } from '@/helpers/chart/transparentize';
+import { transparentize } from '@/utils/transparentize';
 
 export const getCurrentFilter = () => {
   return new URLSearchParams(location.search).get('selectedId') || 'ALL';

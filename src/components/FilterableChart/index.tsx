@@ -1,4 +1,6 @@
-import FilterByID from './FilterByID';
+import { Box } from '@mui/material';
+
+import ChartFilter from './ChartFilter';
 import MixedChart from './MixedChart';
 
 import type { QueryData } from '@/types/queryData';
@@ -12,7 +14,9 @@ type ChartProps = {
 const FilterableChart = ({ loaderData, queryData }: ChartProps) => {
   return (
     <>
-      <FilterByID selectedId={queryData?.selectedId as Id} />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <ChartFilter currentFilter={queryData?.selectedId as Id} />
+      </Box>
       <MixedChart loaderData={loaderData} />
     </>
   );
