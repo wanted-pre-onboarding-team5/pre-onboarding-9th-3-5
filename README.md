@@ -65,15 +65,15 @@ $ npm install && npm run dev
 
 |                                                   차트 필터링                                                    |
 | :--------------------------------------------------------------------------------------------------------------: |
-| <img src=https://user-images.githubusercontent.com/59612529/225921733-935e8094-4175-448f-aace-3cd122b63497.gif/> |
+| <img src=https://user-images.githubusercontent.com/59612529/225940505-5734b7f2-4df7-4b42-a50e-7a43d6e6cf44.gif/> |
 
 |                                      차트 필터링 - 배경 선택 시 ALL로 이동                                       |
 | :--------------------------------------------------------------------------------------------------------------: |
-| <img src=https://user-images.githubusercontent.com/59612529/225922356-d4d69324-4add-4966-a761-700239f03e90.gif/> |
+| <img src=https://user-images.githubusercontent.com/59612529/225940660-d409ee20-b206-4869-a640-5d93cba6f609.gif/> |
 
 |                                       차트 필터링 - 새로고침해도 필터 유지                                       |
 | :--------------------------------------------------------------------------------------------------------------: |
-| <img src=https://user-images.githubusercontent.com/59612529/225923229-ffbdf15d-8a23-4148-b1c6-f218a1ed0225.gif/> |
+| <img src=https://user-images.githubusercontent.com/59612529/225940743-4b2e212b-1466-4264-b947-81713cc0cd91.gif/> |
 
 **필터링 기능 구현** [ISSUE#3](https://github.com/wanted-pre-onboarding-team5/pre-onboarding-9th-3-5/issues/3)
 
@@ -447,4 +447,3 @@ arrowParens: 'always',
 |[@seunghoonKang](https://github.com/seunghoonKang)|[@eunoo1995](https://github.com/eunoo1995)|[@junsu1220](https://github.com/junsu1220)|[@hannaax](https://github.com/hannaax)|[@chadseok](https://github.com/chadseok)|[@jaypedia](https://github.com/jaypedia)|[@letsjo](https://github.com/letsjo)|
 |<img src="https://avatars.githubusercontent.com/seunghoonKang" width="80">|<img src="https://avatars.githubusercontent.com/eunoo1995" width="80">|<img src="https://avatars.githubusercontent.com/junsu1220" width="80">|<img src="https://avatars.githubusercontent.com/hannaax" width="80">|<img src="https://avatars.githubusercontent.com/chadseok" width="80">|<img src="https://avatars.githubusercontent.com/jaypedia" width="80">|<img src="https://avatars.githubusercontent.com/letsjo" width="80">|
 <br>
-```
