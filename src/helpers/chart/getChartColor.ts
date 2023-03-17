@@ -1,15 +1,22 @@
 import type { Id } from '@/types/responseData';
 
-import ID_COLOR_MAP from '@/constants/chart';
+import { CHART_BG_COLOR, UNSELECTED_BG_COLOR, CHART_OPACITY } from '@/constants/chart';
+import { transparentize } from '@/helpers/chart/transparentize';
 
-const getChartColor = (idArray: Id[], selectedId: Id | undefined) => {
-  const colorArray = [];
-
-  for (const id of idArray) {
-    colorArray.push(id === selectedId || selectedId === undefined ? ID_COLOR_MAP[id] : '#efefef');
-  }
-
-  return colorArray;
+export const getCurrentFilter = () => {
+  return new URLSearchParams(location.search).get('selectedId') || 'ALL';
 };
 
-export default getChartColor;
+export const fillChartColor = (selectedId: Id) => {
+  const filter = getCurrentFilter();
+
+  if (filter === selectedId) {
+    return transparentize(CHART_BG_COLOR[selectedId], CHART_OPACITY.selected);
+  }
+
+  if (filter === 'ALL') {
+    return transparentize(CHART_BG_COLOR[selectedId], CHART_OPACITY.default);
+  }
+
+  return UNSELECTED_BG_COLOR;
+};

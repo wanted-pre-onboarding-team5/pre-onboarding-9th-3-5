@@ -3,13 +3,12 @@ import extractArrayFromResponse from '../extractArrayFromResponse';
 import getChartData from './getChartData';
 import getChartOptions from './getChartOptions';
 
-import type { QueryData } from '@/types/queryData';
 import type { FlexsysApi } from '@/types/responseData';
 
-const extractChartDataAndOptions = (loaderData: FlexsysApi, queryData: QueryData) => {
+const extractChartDataAndOptions = (loaderData: FlexsysApi) => {
   const extractedDataArray = extractArrayFromResponse(loaderData);
-
-  const data = getChartData({ extractedDataArray, queryData });
+  const responseData = loaderData.response;
+  const data = getChartData({ responseData, extractedDataArray });
   const options = getChartOptions({ extractedDataArray });
 
   return { data, options };

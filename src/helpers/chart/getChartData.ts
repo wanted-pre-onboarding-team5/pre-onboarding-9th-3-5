@@ -1,40 +1,53 @@
 import { ChartData } from 'chart.js';
 
-import type { ExtractedArrayDataType } from '../extractArrayFromResponse';
-import type { QueryData } from '@/types/queryData';
+import type { ExtractedArrayData } from '../extractArrayFromResponse';
+import type { ChartContext } from '@/types/chart';
 
-import getChartColor from '@/helpers/chart/getChartColor';
+import { CHART_BG_COLOR, LINE_CHART_BG_COLOR } from '@/constants/chart';
+import { fillChartColor } from '@/helpers/chart/getChartColor';
+import { ResponseData } from '@/types/responseData';
 
 type MixedChartProps = {
-  extractedDataArray: ExtractedArrayDataType;
-  queryData: QueryData;
+  responseData: ResponseData;
+  extractedDataArray: ExtractedArrayData;
 };
 
-const getChartData = ({ extractedDataArray, queryData }: MixedChartProps): ChartData => {
-  const { labelArray, idArray, barDataArray, areaDataArray } = extractedDataArray;
+const getChartData = ({ responseData, extractedDataArray }: MixedChartProps): ChartData => {
+  const { labelArray, barDataArray, areaDataArray } = extractedDataArray;
 
   return {
     labels: labelArray,
     datasets: [
       {
-        backgroundColor: getChartColor(idArray, queryData?.selectedId),
         type: 'bar' as const,
+        backgroundColor: (context: ChartContext) => {
+          const { active, dataIndex } = context;
+          const responseDataKey = labelArray[dataIndex];
+          const placeKey = responseData[responseDataKey].id;
+          if (active) return CHART_BG_COLOR[placeKey];
+          return fillChartColor(placeKey);
+        },
         label: 'value_bar',
         yAxisID: 'bar',
         data: barDataArray,
         borderWidth: 1,
       },
       {
-        backgroundColor: 'rgba(50, 183, 250, 0.15)',
         type: 'line' as const,
+        backgroundColor: (context: ChartContext) => {
+          const { active } = context;
+          return active ? 'purple' : LINE_CHART_BG_COLOR;
+        },
+        borderColor: (context: ChartContext) => {
+          const { active } = context;
+          return active ? 'purple' : LINE_CHART_BG_COLOR;
+        },
         label: 'value_area',
         yAxisID: 'line',
         data: areaDataArray,
-        borderJoinStyle: 'round',
-        borderWidth: 1,
-        fill: 'origin',
-        pointStyle: false,
-        tension: 0.2,
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
       },
     ],
   };

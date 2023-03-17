@@ -13,7 +13,7 @@ const FilterableChart = ({ loaderData, queryData }: ChartProps) => {
   return (
     <>
       <FilterByID selectedId={queryData?.selectedId as Id} />
-      <MixedChart loaderData={loaderData} queryData={queryData} />
+      <MixedChart loaderData={loaderData} />
     </>
   );
 };

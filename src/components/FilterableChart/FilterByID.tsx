@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import type { Id } from '@/types/responseData';
 
-import ID_COLOR_MAP from '@/constants/chart';
+import { CHART_BG_COLOR } from '@/constants/chart';
 
 type FilterByIDProps = {
   selectedId: Id | undefined;
@@ -50,7 +50,7 @@ function FilterByID({ selectedId }: FilterByIDProps) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {Object.keys(ID_COLOR_MAP).map((id) => (
+        {Object.keys(CHART_BG_COLOR).map((id) => (
           <MenuItem key={id} onClick={handleClose}>
             {id}
           </MenuItem>

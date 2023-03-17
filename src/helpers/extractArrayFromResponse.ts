@@ -1,6 +1,6 @@
 import type { FlexsysApi, Id } from '@/types/responseData';
 
-export type ExtractedArrayDataType = {
+export type ExtractedArrayData = {
   labelArray: string[];
   idArray: Id[];
   areaDataArray: number[];
@@ -8,7 +8,7 @@ export type ExtractedArrayDataType = {
 };
 
 const extractArrayFromResponse = (mockData: FlexsysApi) => {
-  const extractedArrayData: ExtractedArrayDataType = {
+  const extractedArrayData: ExtractedArrayData = {
     labelArray: [],
     idArray: [],
     areaDataArray: [],

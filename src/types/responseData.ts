@@ -1,6 +1,6 @@
-import ID_COLOR_MAP from '@/constants/chart';
+import { CHART_BG_COLOR } from '@/constants/chart';
 
-export type Id = keyof typeof ID_COLOR_MAP;
+export type Id = keyof typeof CHART_BG_COLOR;
 
 export interface AreaData {
   id: Id;
