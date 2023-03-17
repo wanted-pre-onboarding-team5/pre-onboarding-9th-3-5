@@ -15,13 +15,13 @@ const extractArrayFromResponse = (mockData: FlexsysApi) => {
     barDataArray: [],
   };
 
-  for (const [key, value] of Object.entries(mockData.response)) {
+  Object.entries(mockData.response).forEach(([key, value]) => {
     const { id, value_area, value_bar } = value;
     extractedArrayData.labelArray.push(key);
     extractedArrayData.idArray.push(id);
     extractedArrayData.areaDataArray.push(value_area);
     extractedArrayData.barDataArray.push(value_bar);
-  }
+  });
 
   return extractedArrayData;
 };
