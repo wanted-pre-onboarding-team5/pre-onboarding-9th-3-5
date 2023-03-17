@@ -1,36 +1,21 @@
 import Radio, { radioClasses } from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { CHART_FILTER } from '@/constants/chart';
 
 interface FilterProps {
   currentFilter: string;
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ChartFilter = ({ currentFilter }: FilterProps) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>(currentFilter || 'ALL');
-  const navigate = useNavigate();
-
-  const handleFilterClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const filterValue = e.currentTarget.value;
-    setSelectedFilter(filterValue);
-    if (filterValue === 'ALL') {
-      navigate(`/`);
-      return;
-    }
-
-    navigate(`?selectedId=${filterValue}`);
-  };
-
+const ChartFilter = ({ currentFilter, onClick }: FilterProps) => {
   return (
     <>
       <RadioGroup
         aria-labelledby='filter'
-        value={selectedFilter}
-        onChange={handleFilterClick}
+        value={currentFilter}
+        onChange={onClick}
         sx={{ gap: 2, mb: 2, flexWrap: 'wrap', flexDirection: 'row' }}
       >
         {CHART_FILTER.map(({ name, bg }) => (

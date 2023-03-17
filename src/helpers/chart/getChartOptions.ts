@@ -1,16 +1,14 @@
 import { ChartOptions } from 'chart.js';
-import { useNavigate } from 'react-router-dom';
 
 import type { ExtractedArrayData } from '../extractArrayFromResponse';
 
 import { CHART_BG_COLOR } from '@/constants/chart';
+import { ChartClick } from '@/types/chart';
 
-const getChartOptions = ({
-  extractedDataArray,
-}: {
-  extractedDataArray: ExtractedArrayData;
-}): ChartOptions => {
-  const navigate = useNavigate();
+const getChartOptions = (
+  extractedDataArray: ExtractedArrayData,
+  onClick: ChartClick,
+): ChartOptions => {
   const { idArray } = extractedDataArray;
 
   return {
@@ -33,15 +31,7 @@ const getChartOptions = ({
         position: 'right',
       },
     },
-    onClick(_, elements) {
-      const element = elements[0];
-      if (!element) {
-        navigate(`/`);
-        return;
-      }
-      const selectedId = idArray[element.index];
-      navigate(`?selectedId=${selectedId}`);
-    },
+    onClick: (_, elements) => onClick(_, elements, idArray),
     plugins: {
       legend: {
         display: false,
