@@ -4,8 +4,8 @@ import { useLoaderData, useLocation } from 'react-router-dom';
 import type { MockData } from '@/types/mockData';
 import type { QueryDataType } from '@/types/queryData';
 
-import FilterBox from '@/components/FilterBox';
-import MixedChart from '@/components/MixedChart';
+import FilterableChart from '@/components/FilterableChart';
+import Header from '@/components/Header';
 import getQueryData from '@/helpers/getQueryData';
 
 const Main = () => {
@@ -15,8 +15,8 @@ const Main = () => {
 
   return (
     <Container>
-      <FilterBox queryData={queryData as QueryDataType} />
-      <MixedChart loaderData={loaderData} queryData={queryData as QueryDataType} />
+      <Header />
+      <FilterableChart loaderData={loaderData} queryData={queryData as QueryDataType} />
     </Container>
   );
 };
