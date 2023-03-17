@@ -3,15 +3,15 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import type { IDType } from '@/types/mockData';
+import type { Id } from '@/types/responseData';
 
 import ID_COLOR_MAP from '@/constants/chart';
 
 type FilterByIDProps = {
-  selectedID: IDType | undefined;
+  selectedId: Id | undefined;
 };
 
-function FilterByID({ selectedID }: FilterByIDProps) {
+function FilterByID({ selectedId }: FilterByIDProps) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -22,7 +22,7 @@ function FilterByID({ selectedID }: FilterByIDProps) {
 
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(null);
-    navigate(`?selectedID=${event.currentTarget.innerText}`);
+    navigate(`?selectedId=${event.currentTarget.innerText}`);
   };
 
   const resetSelectedID = () => {
@@ -39,7 +39,7 @@ function FilterByID({ selectedID }: FilterByIDProps) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        지역: {selectedID || '모두'}
+        지역: {selectedId || '모두'}
       </Button>
       <Menu
         id='basic-menu'

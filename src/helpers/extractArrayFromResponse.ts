@@ -1,13 +1,13 @@
-import type { MockDataType, IDType } from '@/types/mockData';
+import type { FlexsysApi, Id } from '@/types/responseData';
 
 export type ExtractedArrayDataType = {
   labelArray: string[];
-  idArray: IDType[];
+  idArray: Id[];
   areaDataArray: number[];
   barDataArray: number[];
 };
 
-const extractArrayFromResponse = (mockData: MockDataType) => {
+const extractArrayFromResponse = (mockData: FlexsysApi) => {
   const extractedArrayData: ExtractedArrayDataType = {
     labelArray: [],
     idArray: [],

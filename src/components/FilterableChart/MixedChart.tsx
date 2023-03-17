@@ -1,14 +1,14 @@
 import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 
-import type { MockDataType } from '@/types/mockData';
-import type { QueryDataType } from '@/types/queryData';
+import type { QueryData } from '@/types/queryData';
+import type { FlexsysApi } from '@/types/responseData';
 
 import extractChartDataAndOptions from '@/helpers/chart/extractChartDataAndOptions';
 
 type MixedChartProps = {
-  loaderData: MockDataType;
-  queryData: QueryDataType;
+  loaderData: FlexsysApi;
+  queryData: QueryData;
 };
 
 const MixedChart = ({ loaderData, queryData }: MixedChartProps) => {

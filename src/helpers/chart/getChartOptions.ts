@@ -34,7 +34,7 @@ const getChartOptions = ({
     onClick(event, elements, chart) {
       event;
       chart;
-      navigate(`?selectedID=${idArray[elements[0].index]}`);
+      navigate(`?selectedId=${idArray[elements[0].index]}`);
     },
     plugins: {
       legend: {

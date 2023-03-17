@@ -1,13 +1,13 @@
 import { ChartData } from 'chart.js';
 
 import type { ExtractedArrayDataType } from '../extractArrayFromResponse';
-import type { QueryDataType } from '@/types/queryData';
+import type { QueryData } from '@/types/queryData';
 
 import getChartColor from '@/helpers/chart/getChartColor';
 
 type MixedChartProps = {
   extractedDataArray: ExtractedArrayDataType;
-  queryData: QueryDataType;
+  queryData: QueryData;
 };
 
 const getChartData = ({ extractedDataArray, queryData }: MixedChartProps): ChartData => {
@@ -17,7 +17,7 @@ const getChartData = ({ extractedDataArray, queryData }: MixedChartProps): Chart
     labels: labelArray,
     datasets: [
       {
-        backgroundColor: getChartColor(idArray, queryData?.selectedID),
+        backgroundColor: getChartColor(idArray, queryData?.selectedId),
         type: 'bar' as const,
         label: 'value_bar',
         yAxisID: 'bar',

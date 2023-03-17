@@ -1,18 +1,18 @@
 import FilterByID from './FilterByID';
 import MixedChart from './MixedChart';
 
-import type { MockData, IDType } from '@/types/mockData';
-import type { QueryDataType } from '@/types/queryData';
+import type { QueryData } from '@/types/queryData';
+import type { FlexsysApi, Id } from '@/types/responseData';
 
 type ChartProps = {
-  loaderData: MockData;
-  queryData: QueryDataType;
+  loaderData: FlexsysApi;
+  queryData: QueryData;
 };
 
 const FilterableChart = ({ loaderData, queryData }: ChartProps) => {
   return (
     <>
-      <FilterByID selectedID={queryData?.selectedID as IDType} />
+      <FilterByID selectedId={queryData?.selectedId as Id} />
       <MixedChart loaderData={loaderData} queryData={queryData} />
     </>
   );
