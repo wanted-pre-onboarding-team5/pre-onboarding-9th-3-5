@@ -1,23 +1,23 @@
-import { Container } from '@mui/system';
+import Box from '@mui/material/Box';
 import { useLoaderData, useLocation } from 'react-router-dom';
 
-import type { MockData } from '@/types/mockData';
-import type { QueryDataType } from '@/types/queryData';
+import type { QueryData } from '@/types/queryData';
+import type { FlexsysApi } from '@/types/responseData';
 
-import FilterBox from '@/components/FilterBox';
-import MixedChart from '@/components/MixedChart';
+import FilterableChart from '@/components/FilterableChart';
+import Header from '@/components/Header';
 import getQueryData from '@/helpers/getQueryData';
 
 const Main = () => {
   const location = useLocation();
-  const loaderData = useLoaderData() as MockData;
+  const loaderData = useLoaderData() as FlexsysApi;
   const queryData = getQueryData(location.search);
 
   return (
-    <Container>
-      <FilterBox queryData={queryData as QueryDataType} />
-      <MixedChart loaderData={loaderData} queryData={queryData as QueryDataType} />
-    </Container>
+    <Box sx={{ m: 1 }}>
+      <Header />
+      <FilterableChart loaderData={loaderData} queryData={queryData as QueryData} />
+    </Box>
   );
 };
 

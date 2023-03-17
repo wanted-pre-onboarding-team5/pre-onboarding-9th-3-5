@@ -1,5 +1,5 @@
-import type { IDType } from './mockData';
+import type { Id } from './responseData';
 
-export type QueryDataType = {
-  selectedID: IDType;
+export type QueryData = {
+  selectedId: Id;
 };

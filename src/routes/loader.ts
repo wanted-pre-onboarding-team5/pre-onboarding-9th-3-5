@@ -1,5 +1,7 @@
+import { httpClient } from '@/utils/httpClient';
+
 const loader = () => {
-  return fetch('/data.json');
+  return httpClient('/data.json');
 };
 
 export default loader;

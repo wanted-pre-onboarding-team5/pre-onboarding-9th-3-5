@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider, RouteObject } from 'react-router-d
 
 import loader from './loader';
 
-import Error from '@/pages/error';
-import Main from '@/pages/main';
+import Error from '@/pages/Error';
+import Main from '@/pages/Main';
 
 const routes: RouteObject[] = [{ path: '/', element: <Main />, errorElement: <Error />, loader }];
 
